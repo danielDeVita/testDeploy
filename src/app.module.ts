@@ -11,16 +11,28 @@ import { User } from './users/entities/user.entity';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: `${process.env.DATABASE_HOST}`,
+    //   port: 26876,
+    //   username: `${process.env.DATABASE_USERNAME}`,
+    //   password: `${process.env.DATABASE_PASSWORD}`,
+    //   database: `${process.env.DATABASE_NAME}`,
+    //   ssl: `${process.env.SSL_MODE}`,
+    //   entities: [User],
+    //   synchronize: true,
+    // }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: `${process.env.DATABASE_HOST}`,
-      port: 3306,
-      username: `${process.env.DATABASE_USERNAME}`,
-      password: `${process.env.DATABASE_PASSWORD}`,
-      database: `${process.env.DATABASE_NAME}`,
+      url: `mysql://${process.env.DATABASE_USERNAME}:${
+        process.env.DATABASE_PASSWORD
+      }@${process.env.DATABASE_HOST}:${parseInt(process.env.DATABASE_PORT)}/${
+        process.env.DATABASE_NAME
+      }?ssl-mode=${process.env.SSL_MODE}`,
       entities: [User],
       synchronize: true,
     }),
+
     UsersModule,
   ],
   controllers: [AppController],
